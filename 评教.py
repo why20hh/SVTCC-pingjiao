@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from lxml import html
+import time
 
 try:
     def submit(n, kch):
@@ -64,7 +65,8 @@ try:
         print('第{}门课程已经评教完成'.format(kc))
         kc += 1
     print('所有课程已经评教,请登陆确认')
-    input()
+    print('程序10秒后自动关闭')
+    time.sleep(10)
 except:
     print('未知错误')
-    input()
+    time.sleep(10)
