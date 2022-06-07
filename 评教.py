@@ -20,34 +20,27 @@ try:
 
 
     base_url = 'http://xspj.svtcc.edu.cn/Main/Login'
-
     xh = int(input('请输入学号：'))
     data = {
         'n': xh,
         'p': xh,
         'a': xh
     }
-
     session = requests.session()
     html_text = session.post(url=base_url, data=data)
-
     html_cp = session.post('http://xspj.svtcc.edu.cn/Career/StudentToTeacher')
-
     bsobj = BeautifulSoup(html_cp.content, "lxml")
     kc = 1
     for tag in bsobj.find_all("a"):
-
         review_url = 'http://xspj.svtcc.edu.cn' + tag.get("href")
         kch = review_url.strip().split('/')[-1]
         if 'StudentAdd' in review_url:
             pass
         else:
-
             review_bsObj = session.get(review_url)
             html_text = review_bsObj.content.decode("utf-8")
             content = html.etree.HTML(html_text)
             value = content.xpath('//*[@id="TestQuestiong"]/div/div/div[1]/input/@value')
-
             a = 0
             while a < len(value):
                 if a < 27:
@@ -59,7 +52,6 @@ try:
                     n = value[0]
                     a += 1
                     submit(n, kch)
-
                     print('提交')
         session.post('http://xspj.svtcc.edu.cn/Career/SetTeacherMeasurementFinish?testID={}'.format(kch))
         print('第{}门课程已经评教完成'.format(kc))
